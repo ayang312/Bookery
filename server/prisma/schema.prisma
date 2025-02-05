@@ -50,5 +50,4 @@ model Appointment {
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   timeSlot       TimeSlot[] // One-to-One relationship
-  timeSlotId     Int? //foreign key to TimeSlot
 }
