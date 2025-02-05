@@ -8,7 +8,15 @@ Bookery was developed with the unique needs of Kairos Weddings in mind, enabling
     - Provide secure access for a team of users, each with different roles
     - Ensure greate communication and convenience for your clients
 
-### Key Features
+### Tech/Tools
+This application was built using
+    - PostgreSQL for the database
+    - Prisma ORM for database management
+    - React for the frontend
+    - Express.js and Node.js for the backend
+    - Redux Toolkit (RTK) for state management
+
+#### Key Features
 
 1. User Access Roles for Team Management
     - Owner:
@@ -37,7 +45,7 @@ Bookery was developed with the unique needs of Kairos Weddings in mind, enabling
 6. Dynamic Search Bar
     - to quickly find specific appointments or free time slots
 
-#### Usage Guide
+##### Usage Guide
 
 - Step 1: Logging In
     - Open your management dashboard
@@ -60,7 +68,7 @@ Bookery was developed with the unique needs of Kairos Weddings in mind, enabling
     - Assign roles like Manager or Assistant
     - Remove users who no longer need access
 
-##### Support
+###### Support
 If you encounter any issues, have questions, or need additional features, feel free to reach out to our support team. We're here to ensure that Bookery grows alongside Kairos Weddings.
 
 Contact Support:
