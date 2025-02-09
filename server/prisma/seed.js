@@ -1,6 +1,6 @@
 const prisma = require("../config/db");
 
-async function main() {
+async function seed() {
   // Seed Users
   const users = await prisma.user.createMany({
     data: [
@@ -49,6 +49,14 @@ async function main() {
   console.log(
     `Appointment created for ${appointment1.firstName} ${appointment1.lastName}`
   );
-
-  
 }
+
+seed()
+  .then(async (e) => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
