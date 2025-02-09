@@ -10,4 +10,19 @@ async function main() {
     ],
   });
   console.log(`${users.count} users created`);
+
+  //   Seed TimeSlots
+  const timeSlots = await prisma.timeSlot.createMany({
+    data: [
+      { date: new Date("2025-02-10"), time: "10:00 AM", isBooked: false },
+      { date: new Date("2025-02-10"), time: "11:00 AM", isBooked: false },
+      { date: new Date("2025-02-10"), time: "12:00 PM", isBooked: true },
+      { date: new Date("2025-02-11"), time: "12:00 PM", isBooked: false },
+      { date: new Date("2025-02-11"), time: "1:00 PM", isBooked: false },
+      { date: new Date("2025-02-12"), time: "12:00 PM", isBooked: true },
+      { date: new Date("2025-02-12"), time: "1:00 PM", isBooked: false },
+    ],
+  });
+  console.log(`${timeSlots.count} time slots created`);
+  
 }
