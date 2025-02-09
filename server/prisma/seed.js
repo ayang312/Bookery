@@ -24,5 +24,31 @@ async function main() {
     ],
   });
   console.log(`${timeSlots.count} time slots created`);
+
+  //   Seed Appointments
+  const appointment1 = await prisma.appointment.create({
+    data: [
+      {
+        firstName: "Andrew",
+        lastName: "test",
+        email: "atest@gmail.com",
+        phoneNumber: "123-456-7890",
+        eventDate: new Date("2025-10-10"),
+        primaryVenue: "Crystal Church of NY",
+        secondaryVenue: "Larkfield",
+        timeSlot: {
+          create: {
+            date: new Date("2025-02-15"),
+            time: "03:00 PM",
+            isBooked: true,
+          },
+        },
+      },
+    ],
+  });
+  console.log(
+    `Appointment created for ${appointment1.firstName} ${appointment1.lastName}`
+  );
+
   
 }
