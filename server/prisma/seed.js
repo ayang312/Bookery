@@ -4,9 +4,9 @@ async function seed() {
   // Seed Users
   const users = await prisma.user.createMany({
     data: [
-      { username: "test1", password: "test1", role: "OWNER" },
-      { username: "test2", password: "test2", role: "MANAGER" },
-      { username: "test3", password: "test3", role: "ASSISTANT" },
+      { username: "test1", password: "password", role: "OWNER" },
+      { username: "test2", password: "password", role: "MANAGER" },
+      { username: "test3", password: "password", role: "ASSISTANT" },
     ],
   });
   console.log(`${users.count} users created`);
@@ -27,28 +27,42 @@ async function seed() {
 
   //   Seed Appointments
   const appointment1 = await prisma.appointment.create({
-    data: [
-      {
-        firstName: "Andrew",
-        lastName: "test",
-        email: "atest@gmail.com",
-        phoneNumber: "123-456-7890",
-        eventDate: new Date("2025-10-10"),
-        primaryVenue: "Crystal Church of NY",
-        secondaryVenue: "Larkfield",
-        timeSlot: {
-          create: {
-            date: new Date("2025-02-15"),
-            time: "03:00 PM",
-            isBooked: true,
-          },
+    data: {
+      firstName: "Andrew",
+      lastName: "test",
+      email: "atest@gmail.com",
+      phoneNumber: "123-456-7890",
+      eventDate: new Date("2025-10-10"),
+      primaryVenue: "Grand Central",
+      secondaryVenue: "Backup Venue",
+      timeSlot: {
+        create: {
+          date: new Date("2025-02-15"),
+          time: "03:00 PM",
+          isBooked: true,
         },
       },
-    ],
+    },
   });
   console.log(
     `Appointment created for ${appointment1.firstName} ${appointment1.lastName}`
   );
+
+  // Seed Appointments (Option 2: Multiple Appointments without Nested TimeSlot)
+  const appointments = await prisma.appointment.createMany({
+    data: [
+      {
+        firstName: "Kathy",
+        lastName: "test",
+        email: "ktest@gmail.com",
+        phoneNumber: "987-654-3210",
+        eventDate: new Date("2025-11-15T00:00:00.000Z"),
+        primaryVenue: "Central Park",
+        secondaryVenue: "Backup Venue",
+      },
+    ],
+  });
+  console.log(`${appointments.count} additional appointments created.`);
 }
 
 seed()
