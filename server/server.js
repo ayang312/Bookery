@@ -1,7 +1,8 @@
-require("dotenv").config();
-const express = require("express");
-const app = express();
-const cors = require("cors");
+const app = require('./app');
+const dotenv = require('dotenv');
+
+// Load env variables
+dotenv.config();
 
 // connect to port set in .env file
 const port = process.env.PORT;
