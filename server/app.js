@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// Body-parsing Middleware
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
