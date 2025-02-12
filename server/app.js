@@ -13,12 +13,8 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 
-// Simple error-handling middleware
-app.use((err, req, res, next) => {
-  console.log(err);
-  const statusCode = err.statusCode ?? 500;
-  const message = err.message ?? "Internal Server Error";
-  res.status(statusCode).json({ message });
-});
+
+
+
 
 module.exports = app;
