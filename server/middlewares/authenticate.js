@@ -28,7 +28,7 @@ const isLoggedIn = async (req, res, next) => {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Attach the user information tot he request object
+      // Attach the user information to the request object
       req.user = decoded;
 
       // Proceed to next middleware

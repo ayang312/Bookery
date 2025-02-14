@@ -63,4 +63,38 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { login };
+// REGISTER function
+const register = async (req, res, next) => {
+  // destructure the req.body
+  const { username, email, password } = req.body;
+  try {
+    // Validate if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Email already in use! Please try again" });
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        username: username,
+        email: email,
+        password: hashedPassword,
+        role: "ASSISTANT",
+      },
+    });
+
+    res.status(201).json({ message: "User registered successfully", user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, register };
