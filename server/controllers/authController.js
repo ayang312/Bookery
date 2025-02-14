@@ -65,22 +65,36 @@ const login = async (req, res, next) => {
 
 // REGISTER function
 const register = async (req, res, next) => {
-    try {
-        // Validate if user already exists
-        const existingUser = await prisma.user.findUnique({
-            where: { email: req.body.email }
-        })
+  // destructure the req.body
+  const { username, email, password } = req.body;
+  try {
+    // Validate if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
 
-        const response = await prisma.user.create({
-            data: {
-                username: req.body.username,
-                password: req.body.password,
-            }
-        })
-
-    } catch (error) {
-        next(error)
+    if (!existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Email already in use! Please try again" });
     }
-}
 
-module.exports = { login };
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        username: username,
+        email: email,
+        password: hashedPassword,
+        role: "ASSISTANT",
+      },
+    });
+
+    res.status(201).json({ message: "User registered successfully", user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, register };
