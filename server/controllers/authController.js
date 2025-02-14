@@ -29,32 +29,19 @@ const login = async (req, res, next) => {
     );
 
     // Remove sensitive data from response object and send the remaining user data back to client
-    const {
-      id,
-      password,
-      resetPassToken,
-      currentToken,
-      resetPassTokenExpiry,
-      ...rest
-    } = response;
+    const { password, resetPassToken, resetPassTokenExpiry, ...rest } =
+      response;
 
-    try {
-      // helper function to store generated token in database for temp use
-      await addTempToken(id, token);
-
-      res
-        .cookie("token", `Bearer ${token}`, {
-          httpOnly: true,
-          sameSite: "none",
-          secure: true,
-          expires: new Date(Date.now() + 3600000),
-        })
-        .json({
-          user: rest,
-        });
-    } catch (error) {
-      next(error);
-    }
+    res
+      .cookie("token", `Bearer ${token}`, {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+        expires: new Date(Date.now() + 3600000),
+      })
+      .json({
+        user: rest,
+      });
   } catch (error) {
     next({
       statusCode: 404,
@@ -97,4 +84,15 @@ const register = async (req, res, next) => {
   }
 };
 
-module.exports = { login, register };
+// LOGOUT function
+const logout = async (req, res, next) => {
+  try {
+    res.clearCookie("token", { httpOnly: true, sameSite: "strict" }).send({
+      message: "Logged out successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { login, register, logout };
