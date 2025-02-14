@@ -19,10 +19,9 @@ This application was built using
 #### Key Features
 
 1. User Access Roles for Team Management
-    - Owner:
+    - Admin:
         - Full access to manage team members, time slots, and bookings
-    - Manager:
-        - Can manage time slots and view bookings but can't add or edit users
+        - Promote/Demote to Admin
     - Assistant:
         - Only able to view bookings without making changes
 
@@ -65,7 +64,7 @@ This application was built using
 
 - Step 4: Team Collaboration
     - Add new team members
-    - Assign roles like Manager or Assistant
+    - Assign roles like Admin or Assistant
     - Remove users who no longer need access
 
 ###### Support
