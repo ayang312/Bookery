@@ -63,4 +63,24 @@ const login = async (req, res, next) => {
   }
 };
 
+// REGISTER function
+const register = async (req, res, next) => {
+    try {
+        // Validate if user already exists
+        const existingUser = await prisma.user.findUnique({
+            where: { email: req.body.email }
+        })
+
+        const response = await prisma.user.create({
+            data: {
+                username: req.body.username,
+                password: req.body.password,
+            }
+        })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = { login };
