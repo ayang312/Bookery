@@ -3,6 +3,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoute");
+const adminRoutes = require("./routes/adminRoute");
 const cookieParser = require("cookie-parser");
 
 // Load environment variables
@@ -18,5 +19,6 @@ app.use(cookieParser());
 
 // Use the imported API Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
 
 module.exports = app;
