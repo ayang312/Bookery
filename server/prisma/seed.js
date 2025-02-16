@@ -59,21 +59,27 @@ async function seed() {
     `Appointment created for ${appointment1.firstName} ${appointment1.lastName}`
   );
 
-  // Seed Appointments (Option 2: Multiple Appointments without Nested TimeSlot)
-  const appointments = await prisma.appointment.createMany({
-    data: [
-      {
-        firstName: "Kathy",
-        lastName: "Test",
-        email: "ktest@example.com",
-        phoneNumber: "987-654-3210",
-        eventDate: new Date("2025-11-15T00:00:00.000Z"),
-        primaryVenue: "Central Park",
-        secondaryVenue: "Backup Venue",
-        timeSlot: {
-          connect: { id: 6 }, //Link to the time slot with id 6
-        },
+  const appointment2 = await prisma.appointment.create({
+    data: {
+      firstName: "Kathy",
+      lastName: "Test",
+      email: "ktest@example.com",
+      phoneNumber: "987-654-3210",
+      eventDate: new Date("2025-11-15T00:00:00.000Z"),
+      primaryVenue: "Central Park",
+      secondaryVenue: "Backup Venue",
+      timeSlot: {
+        connect: { id: 6 }, //Link to the time slot with id 6
       },
+    },
+  });
+  console.log(
+    `Appointment created for ${appointment2.firstName} ${appointment2.lastName}`
+  );
+
+  // Seed Appointments (Option 2: Multiple Appointments without Nested TimeSlot)
+  const additionalAppointments = await prisma.appointment.createMany({
+    data: [
       {
         firstName: "Mike",
         lastName: "Test",
@@ -94,7 +100,7 @@ async function seed() {
       },
     ],
   });
-  console.log(`${appointments.count} additional appointments created.`);
+  console.log(`${additionalAppointments.count} additional appointments created.`);
 }
 
 seed()
