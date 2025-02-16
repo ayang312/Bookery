@@ -60,7 +60,7 @@ const register = async (req, res, next) => {
       where: { email },
     });
 
-    if (!existingUser) {
+    if (existingUser) {
       return res
         .status(400)
         .json({ message: "Email already in use! Please try again" });
