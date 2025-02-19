@@ -18,4 +18,25 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllUsers };
+// Create new user
+const createUser = async (req, res, next) => {
+  try {
+    const newUser = await prisma.user.create({
+      data: {
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
+        role: req.body.role,
+      },
+    });
+    console.log(req.body);
+    res.status(201).json({
+      message: "User created successfully",
+      user: newUser,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAllUsers, createUser };
