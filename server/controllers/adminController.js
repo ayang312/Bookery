@@ -42,12 +42,27 @@ const createUser = async (req, res, next) => {
 // Delete a user
 const deleteUser = async (req, res, next) => {
   try {
-    const { id } = req.body;
-    await prisma.user.delete({
-      where: id,
+    const { id } = req.params;
+
+    if (!id) {
+      res.status(404).json({ message: "User ID Not Found!" });
+    }
+    // Validate the ID
+    const userId = parseInt(id, 10); // Convert id to an integer
+    if (isNaN(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    const deletedUser = await prisma.user.delete({
+      where: { id: userId },
     });
-    res.status(200).json({ message: "User successfully deleted." });
-  } catch (error) {}
+    res.status(200).json({
+      message: "User successfully deleted.",
+      user: deletedUser,
+    });
+  } catch (error) {
+    next({ message: "User unsuccessfully deleted", error });
+  }
 };
 
 module.exports = { getAllUsers, createUser, deleteUser };
