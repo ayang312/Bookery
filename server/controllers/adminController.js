@@ -109,6 +109,7 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
+// Create a new time slot
 const addTimeSlot = async (req, res, next) => {
   try {
     const { date, time } = req.body;
@@ -129,4 +130,29 @@ const addTimeSlot = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllUsers, createUser, updateUser, deleteUser, addTimeSlot };
+// Delete a time slot
+const deleteTimeSlot = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = parseInt(id, 10);
+
+    const deletedTimeSlot = await prisma.timeSlot.delete({
+      where: { id: userId },
+    });
+    res.json({
+      message: "Time Slot Successfully deleted",
+      timeSlot: deletedTimeSlot,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  getAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  addTimeSlot,
+  deleteTimeSlot,
+};
