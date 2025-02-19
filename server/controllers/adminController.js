@@ -89,7 +89,7 @@ const deleteUser = async (req, res, next) => {
     const { id } = req.params;
 
     if (!id) {
-      res.status(404).json({ message: "User ID Not Found!" });
+      return res.status(404).json({ message: "User ID Not Found!" });
     }
     // Validate the ID
     const userId = parseInt(id, 10); // Convert id to an integer
@@ -106,6 +106,26 @@ const deleteUser = async (req, res, next) => {
     });
   } catch (error) {
     next({ message: "User unsuccessfully deleted", error });
+  }
+};
+
+const addTimeSlot = async (req, res, next) => {
+  try {
+    const { date, time } = req.body;
+
+    const newTimeSlot = await prisma.timeSlot.create({
+      data: {
+        date: new Date(date), //Ensure date is stored as a Date object
+        time,
+        isBooked: false,
+      },
+    });
+    res.status(201).json({
+      message: "Time Slot successfully created",
+      timeSlot: newTimeSlot,
+    });
+  } catch (error) {
+    next(error);
   }
 };
 
