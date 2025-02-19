@@ -23,7 +23,7 @@ const login = async (req, res, next) => {
 
     // Create a token
     const token = await jwt.sign(
-      { id: response.id, username: response.username },
+      { id: response.id, username: response.username, role: response.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h", notBefore: 0 }
     );
@@ -66,7 +66,7 @@ const register = async (req, res, next) => {
         .json({ message: "Email already in use! Please try again" });
     }
 
-    // Hash the password
+    // Hash the password to be stored in database
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({
@@ -74,7 +74,7 @@ const register = async (req, res, next) => {
         username: username,
         email: email,
         password: hashedPassword,
-        role: "ASSISTANT",
+        role: "ADMIN",
       },
     });
 
