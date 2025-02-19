@@ -66,7 +66,7 @@ const register = async (req, res, next) => {
         .json({ message: "Email already in use! Please try again" });
     }
 
-    // Hash the password
+    // Hash the password to be stored in database
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({

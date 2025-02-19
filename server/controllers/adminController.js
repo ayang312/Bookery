@@ -1,4 +1,5 @@
 const prisma = require("../config/db");
+const bcrypt = require('bcrypt');
 
 // Get all users
 const getAllUsers = async (req, res, next) => {
@@ -22,10 +23,12 @@ const getAllUsers = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     const { username, password, email, role } = req.body;
+    // Hash the password to be stored in database for more security
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await prisma.user.create({
       data: {
         username,
-        password,
+        password: hashedPassword,
         email,
         role,
       },
