@@ -21,12 +21,13 @@ const getAllUsers = async (req, res, next) => {
 // Create new user
 const createUser = async (req, res, next) => {
   try {
+    const { username, password, email, role } = req.body;
     const newUser = await prisma.user.create({
       data: {
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        role: req.body.role,
+        username,
+        password,
+        email,
+        role,
       },
     });
     console.log(req.body);
