@@ -5,6 +5,7 @@ const {
   deleteUser,
   updateUser,
   addTimeSlot,
+  deleteTimeSlot,
 } = require("../controllers/adminController");
 const { isLoggedIn } = require("../middlewares/authenticate");
 const { isAdmin } = require("../middlewares/authorize");
@@ -24,9 +25,8 @@ router.delete("/users/:id", isLoggedIn, isAdmin, deleteUser);
 // Create timeSlot
 router.post("/timeslot", isLoggedIn, isAdmin, addTimeSlot);
 
-// Update timeSlot
-
 // Delete timeSlot
+router.delete("/timeslot/:id", isLoggedIn, isAdmin, deleteTimeSlot);
 
 // Delete appointment
 
