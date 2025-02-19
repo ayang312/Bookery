@@ -129,4 +129,4 @@ const addTimeSlot = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllUsers, createUser, updateUser, deleteUser };
+module.exports = { getAllUsers, createUser, updateUser, deleteUser, addTimeSlot };
