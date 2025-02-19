@@ -1,5 +1,5 @@
 const prisma = require("../config/db");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 // Get all users
 const getAllUsers = async (req, res, next) => {
@@ -43,6 +43,46 @@ const createUser = async (req, res, next) => {
   }
 };
 
+// Update a user
+const updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { username, password, email, role } = req.body;
+
+    // Validate the ID
+    const userId = parseInt(id, 10); // Convert id to an integer
+    if (isNaN(userId)) {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    // Prepare the data object for updating the user info
+    const data = {};
+    if (username) data.username = username;
+    if (email) data.email = email;
+    if (role) data.role = role;
+
+    // Hash the password if it's being updated
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      data.password = hashedPassword;
+    }
+
+    // Update the user in the database
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data,
+    });
+    res.status(201).json({
+      message: "User Info Successfully Updated!",
+      user: updatedUser,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Delete a user
 const deleteUser = async (req, res, next) => {
   try {
@@ -69,4 +109,4 @@ const deleteUser = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllUsers, createUser, deleteUser };
+module.exports = { getAllUsers, createUser, updateUser, deleteUser };
