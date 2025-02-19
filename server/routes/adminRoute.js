@@ -1,6 +1,10 @@
 const router = require("express").Router();
-const { getAllUsers, createUser } = require('../controllers/adminController');
-const { isLoggedIn } = require('../middlewares/authenticate');
+const {
+  getAllUsers,
+  createUser,
+  deleteUser,
+} = require("../controllers/adminController");
+const { isLoggedIn } = require("../middlewares/authenticate");
 const { isAdmin } = require("../middlewares/authorize");
 
 // Get all users
@@ -11,6 +15,7 @@ router.post("/users", isLoggedIn, isAdmin, createUser);
 // Update users
 
 // Delete users
+router.delete("/users/:id", isLoggedIn, isAdmin, deleteUser);
 
 // Create timeSlots
 
