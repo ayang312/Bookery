@@ -7,10 +7,13 @@ const Register = () => {
     email: "",
     password: "",
   });
-
   // Handle errors
+  const [errors, setErrors] = useState("");
   // Handle loading
+  const [loading, setLoading] = useState(false);
+
   // Form validations... username, email, password (later)
+
   // Handle the input changes
   const handleChange = (e) => {
     setFormData({
@@ -18,14 +21,46 @@ const Register = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   // Handle the form submission
-  // Handle the API logic
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    // Handle the API logic
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong fetching API");
+      }
+
+      //   Handle successful Registration
+      console.log("Registration successful", data);
+      alert("Registration successful");
+    } catch (error) {
+      setErrors(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // return a form with inputs
   return (
     <>
       <div>
-        <form>
+        <form onSubmit={handleRegister}>
           <h2>Register</h2>
+
+          {/* Error Handling */}
+          {errors && <p>{errors}</p>}
 
           {/* Username */}
           <div>
@@ -70,7 +105,9 @@ const Register = () => {
           </div>
 
           {/* Submit */}
-          <button type="submit">Register</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Submitting Registration Form..." : "Register"}
+          </button>
         </form>
       </div>
     </>
