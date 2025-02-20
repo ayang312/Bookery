@@ -1,7 +1,6 @@
-import { useState } from "react";
 
 const Home = () => {
-  const [showLogin, setShowLogin] = useState(true);
+
 
   return (
     <>
