@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   // Handle form data to be sent to backend
@@ -11,6 +12,8 @@ const Register = () => {
   const [errors, setErrors] = useState("");
   // Handle loading
   const [loading, setLoading] = useState(false);
+  // Navigate to other page
+  const navigate = useNavigate();
 
   // Form validations... username, email, password (later)
 
@@ -44,6 +47,10 @@ const Register = () => {
 
       //   Handle successful Registration
       console.log("Registration successful", data);
+
+      //   Redirect to confirmation page
+      navigate("/confirmationPage");
+      //   Success message
       alert("Registration successful");
     } catch (error) {
       setErrors(error.message);
