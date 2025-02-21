@@ -49,7 +49,7 @@ const Register = () => {
       console.log("Registration successful", data);
 
       //   Redirect to confirmation page
-      navigate("/confirmationPage");
+      navigate("/confirmation");
       //   Success message
       alert("Registration successful");
     } catch (error) {
