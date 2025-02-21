@@ -11,5 +11,15 @@ export const authApi = rootApi.injectEndpoints({
       }),
     }),
 
+    // User Registration
+    registerUser: builder.mutation({
+      query: (userData) => ({
+        url: "/auth/register",
+        method: "POST",
+        body: userData,
+      }),
+    }),
   }),
 });
+
+export const { useLoginUserMutation, useRegisterUserMutation } = authApi;
