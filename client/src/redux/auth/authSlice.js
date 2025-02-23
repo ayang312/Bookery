@@ -33,6 +33,10 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
+    registerSuccess(state) {
+      state.loading = false;
+      state.isAuthenticated = false;
+    },
   },
 });
 
