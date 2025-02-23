@@ -37,6 +37,10 @@ const authSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = false;
     },
+    registerFailure(state, action) {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
