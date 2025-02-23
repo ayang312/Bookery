@@ -23,6 +23,10 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.error = null;
     },
+    loginFailure(state, action) {
+        state.loading = false;
+        state.error = action.payload;
+    }
   },
 });
 
