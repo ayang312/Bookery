@@ -14,10 +14,7 @@ const Register = () => {
     email: "",
     password: "",
   });
-  // Handle errors
-  const [errors, setErrors] = useState("");
-  // Handle loading
-  const [loading, setLoading] = useState(false);
+
   // Navigate to other page
   const navigate = useNavigate();
   //   Integrate RTK Query to make call to api/auth/register
@@ -121,9 +118,11 @@ const Register = () => {
           </div>
 
           {/* Submit */}
-          <button type="submit" disabled={loading}>
-            {loading ? "Submitting Registration Form..." : "Register"}
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Submitting Registration Form..." : "Register"}
           </button>
+
+          {isError && <p>{error.message}</p>}
         </form>
       </div>
     </>
