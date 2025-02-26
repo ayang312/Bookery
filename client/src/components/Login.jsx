@@ -64,7 +64,13 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <h2>Login</h2>
 
-          {error && <p>{error}</p>}
+          {isError && (
+            <p>
+              {error?.data?.message ||
+                error?.message ||
+                "An error occurred. Please try again."}
+            </p>
+          )}
 
           <div>
             {/* Email or Username Input */}
@@ -96,13 +102,6 @@ const Login = () => {
           <button type="submit" disabled={isLoading}>
             {isLoading ? "Logging in..." : "Login"}
           </button>
-          {isError && (
-            <p>
-              {error?.data?.message ||
-                error?.message ||
-                "An error occurred. Please try again."}
-            </p>
-          )}
         </form>
       </div>
     </>
