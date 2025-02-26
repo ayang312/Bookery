@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../redux/auth/authApi";
+import { registerStart } from "../redux/auth/authSlice";
 
 const Register = () => {
   // Handle form data to be sent to backend
@@ -32,6 +33,9 @@ const Register = () => {
   // Handle the form submission
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // dispatch registerStart upon submitting form
+    dispatch(registerStart());
 
     // Handle the API logic
     try {
