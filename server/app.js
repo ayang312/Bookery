@@ -12,7 +12,6 @@ dotenv.config();
 const app = express();
 
 // Body-parsing Middleware
-app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
