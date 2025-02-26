@@ -6,8 +6,9 @@ export const rootApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/api",
     prepareHeaders: (headers) => {
-      // Get the token from cookies saved from backend
+      // Set the Content-Type header
       headers.set("Content-type", "application/json");
+      return headers;
     },
     // need to set this to "include" for cookies to work
     credentials: "include",
