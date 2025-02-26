@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../redux/auth/authApi";
-import { registerStart, registerSuccess } from "../redux/auth/authSlice";
+import {
+  registerFailure,
+  registerStart,
+  registerSuccess,
+} from "../redux/auth/authSlice";
 
 const Register = () => {
   // Handle form data to be sent to backend
@@ -59,9 +63,8 @@ const Register = () => {
         alert("Registration successful");
       }
     } catch (error) {
-      setErrors(error.message);
-    } finally {
-      setLoading(false);
+      // dispatch registerFailure action from authSlice
+      dispatch(registerFailure(error));
     }
   };
 
