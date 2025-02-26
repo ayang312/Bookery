@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "../redux/auth/authApi";
-import { registerStart } from "../redux/auth/authSlice";
+import { registerStart, registerSuccess } from "../redux/auth/authSlice";
 
 const Register = () => {
   // Handle form data to be sent to backend
@@ -48,10 +48,13 @@ const Register = () => {
 
       //   Handle successful Registration
       if (newUser.user) {
+        // dispatch registerSuccess
+        dispatch(registerSuccess(newUser));
+
         //   Redirect to confirmation page
         navigate("/confirmation");
 
-        console.log("Registration successful", data);
+        console.log("Registration successful", newUser);
         //   Success message
         alert("Registration successful");
       }

@@ -46,7 +46,7 @@ const Login = () => {
 
         // Navigate back to homepage
         navigate("/");
-        console.log("Login successful");
+        console.log("Login successful", user);
         alert("Login successful");
       }
     } catch (error) {
