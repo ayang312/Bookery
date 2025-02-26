@@ -35,7 +35,12 @@ const Register = () => {
 
     // Handle the API logic
     try {
-      const newUser = await registerUser();
+      const newUser = await registerUser({
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        role: "ASSISTANT",
+      }).unwrap();
 
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong fetching API");
