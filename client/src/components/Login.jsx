@@ -44,8 +44,8 @@ const Login = () => {
         //   Handle successful login
         dispatch(loginSuccess({ user: user.user }));
 
-        // Navigate back to homepage
-        navigate("/");
+        // Navigate to Admin Dashboard
+        navigate("/admin");
         console.log("Login successful", user);
         alert("Login successful");
       }
