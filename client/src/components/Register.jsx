@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRegisterUserMutation } from "../redux/auth/authApi";
 
 const Register = () => {
   // Handle form data to be sent to backend
@@ -14,6 +15,9 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   // Navigate to other page
   const navigate = useNavigate();
+  //   Integrate RTK Query to make call to api/auth/register
+  const [registerUser, { isLoading, isError, error }] =
+    useRegisterUserMutation();
 
   // Form validations... username, email, password (later)
 
@@ -31,15 +35,7 @@ const Register = () => {
 
     // Handle the API logic
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
+      const newUser = await registerUser();
 
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong fetching API");
