@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   // Tracks the form inputs
-  const [formData, setFormData] = useState({
-    identifier: "", // email/username
+  const [formInput, setFormInput] = useState({
+    identifier: "", // Email/username
     password: "",
   });
   // RTK Query for calling /api/auth/login
@@ -24,8 +24,8 @@ const Login = () => {
   // Handle input changes
   const handleChange = async (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormInput({
+      ...formInput,
       [name]: value,
     });
   };
@@ -36,12 +36,20 @@ const Login = () => {
     // upon submitting form, dispatch loginStart
     dispatch(loginStart());
 
+    // console.log(formData);
+
+    // Regex to check if input is an email, if false it is treated as a username
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formInput.identifier);
+
+    const formData = isEmail
+      ? { email: formInput.identifier, password: formInput.password }
+      : { username: formInput.identifier, password: formInput.password };
+
+    console.log("Login Data:", formData);
+
     // API Call
     try {
-      const user = await loginUser({
-        ...formData,
-        baseUrl: "http://localhost:3000",
-      }).unwrap();
+      const user = await loginUser(formData).unwrap();
       console.log(user);
 
       if (user.user) {
@@ -79,7 +87,7 @@ const Login = () => {
               type="text"
               name="identifier"
               id="identifier"
-              value={formData.identifier}
+              value={formInput.identifier}
               onChange={handleChange}
               required
               placeholder="Please enter email or username"
@@ -92,7 +100,7 @@ const Login = () => {
               type="password"
               name="password"
               id="password"
-              value={formData.password}
+              value={formInput.password}
               onChange={handleChange}
               required
               placeholder="Enter your password"
