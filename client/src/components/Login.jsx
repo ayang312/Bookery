@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { useLoginUserMutation } from "../redux/auth/authApi";
+import { useDispatch } from "react-redux";
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess,
+} from "../redux/auth/authSlice";
 
 const Login = () => {
   // Tracks the form inputs
@@ -7,12 +13,10 @@ const Login = () => {
     identifier: "", // email/username
     password: "",
   });
-  //   Handle any errors
-  const [error, setError] = useState("");
-  //   isLoading
-  const [loading, setLoading] = useState(false);
   // RTK Query for calling /api/auth/login
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
+  // useDispatch to call apiSlice actions
+  const dispatch = useDispatch();
 
   // Handle input changes
   const handleChange = async (e) => {
@@ -26,8 +30,8 @@ const Login = () => {
   //   Handle Form submissions
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+    // upon submitting form, dispatch loginStart
+    dispatch(loginStart());
 
     // API Call
     try {
@@ -35,13 +39,12 @@ const Login = () => {
 
       if (user.user) {
         //   Handle successful login
+        dispatch(loginSuccess({ user: user.user }));
         console.log("Login successful");
         alert("Login successful");
       }
     } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+      dispatch(loginFailure(error.message || "Failed to login"));
     }
   };
 
@@ -80,9 +83,14 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
           </button>
+          {isError && (
+            <p>
+              {error?.data?.message || "Invalid credentials, please try again"}
+            </p>
+          )}
         </form>
       </div>
     </>
