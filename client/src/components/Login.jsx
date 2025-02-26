@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLoginUserMutation } from "../redux/auth/authApi";
 
 const Login = () => {
   // Tracks the form inputs
@@ -10,6 +11,8 @@ const Login = () => {
   const [error, setError] = useState("");
   //   isLoading
   const [loading, setLoading] = useState(false);
+  // RTK Query for calling /api/auth/login
+  const [loginUser] = useLoginUserMutation();
 
   // Handle input changes
   const handleChange = async (e) => {
@@ -28,23 +31,13 @@ const Login = () => {
 
     // API Call
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const user = await loginUser(formData).unwrap();
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong fetching API");
+      if (user.user) {
+        //   Handle successful login
+        console.log("Login successful");
+        alert("Login successful");
       }
-
-      //   Handle successful login
-      console.log("Login successful", data);
-      alert("Login successful");
     } catch (error) {
       setError(error.message);
     } finally {
