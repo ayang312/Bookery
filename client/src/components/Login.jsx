@@ -1,4 +1,12 @@
 import { useState } from "react";
+import { useLoginUserMutation } from "../redux/auth/authApi";
+import { useDispatch } from "react-redux";
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess,
+} from "../redux/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   // Tracks the form inputs
@@ -6,10 +14,12 @@ const Login = () => {
     identifier: "", // email/username
     password: "",
   });
-  //   Handle any errors
-  const [error, setError] = useState("");
-  //   isLoading
-  const [loading, setLoading] = useState(false);
+  // RTK Query for calling /api/auth/login
+  const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
+  // useDispatch to call apiSlice actions
+  const dispatch = useDispatch();
+  // Navigate to other page
+  const navigate = useNavigate();
 
   // Handle input changes
   const handleChange = async (e) => {
@@ -23,32 +33,24 @@ const Login = () => {
   //   Handle Form submissions
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+    // upon submitting form, dispatch loginStart
+    dispatch(loginStart());
 
     // API Call
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const user = await loginUser(formData).unwrap();
 
-      const data = await response.json();
+      if (user.user) {
+        //   Handle successful login
+        dispatch(loginSuccess({ user: user.user }));
 
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong fetching API");
+        // Navigate back to homepage
+        navigate("/");
+        console.log("Login successful", user);
+        alert("Login successful");
       }
-
-      //   Handle successful login
-      console.log("Login successful", data);
-      alert("Login successful");
     } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+      dispatch(loginFailure(error.message || "Failed to login"));
     }
   };
 
@@ -87,9 +89,14 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
           </button>
+          {isError && (
+            <p>
+              {error?.data?.message || "Invalid credentials, please try again"}
+            </p>
+          )}
         </form>
       </div>
     </>

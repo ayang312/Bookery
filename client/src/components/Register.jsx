@@ -1,5 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRegisterUserMutation } from "../redux/auth/authApi";
+import {
+  registerFailure,
+  registerStart,
+  registerSuccess,
+} from "../redux/auth/authSlice";
 
 const Register = () => {
   // Handle form data to be sent to backend
@@ -8,12 +14,12 @@ const Register = () => {
     email: "",
     password: "",
   });
-  // Handle errors
-  const [errors, setErrors] = useState("");
-  // Handle loading
-  const [loading, setLoading] = useState(false);
+
   // Navigate to other page
   const navigate = useNavigate();
+  //   Integrate RTK Query to make call to api/auth/register
+  const [registerUser, { isLoading, isError, error }] =
+    useRegisterUserMutation();
 
   // Form validations... username, email, password (later)
 
@@ -29,33 +35,33 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
+    // dispatch registerStart upon submitting form
+    dispatch(registerStart());
+
     // Handle the API logic
     try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong fetching API");
-      }
+      const newUser = await registerUser({
+        username: formData.username,
+        password: formData.password,
+        email: formData.email,
+        role: "ASSISTANT",
+      }).unwrap();
 
       //   Handle successful Registration
-      console.log("Registration successful", data);
+      if (newUser.user) {
+        // dispatch registerSuccess
+        dispatch(registerSuccess(newUser));
 
-      //   Redirect to confirmation page
-      navigate("/confirmation");
-      //   Success message
-      alert("Registration successful");
+        //   Redirect to confirmation page
+        navigate("/confirmation");
+
+        console.log("Registration successful", newUser);
+        //   Success message
+        alert("Registration successful");
+      }
     } catch (error) {
-      setErrors(error.message);
-    } finally {
-      setLoading(false);
+      // dispatch registerFailure action from authSlice
+      dispatch(registerFailure(error));
     }
   };
 
@@ -112,9 +118,11 @@ const Register = () => {
           </div>
 
           {/* Submit */}
-          <button type="submit" disabled={loading}>
-            {loading ? "Submitting Registration Form..." : "Register"}
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Submitting Registration Form..." : "Register"}
           </button>
+
+          {isError && <p>{error.message}</p>}
         </form>
       </div>
     </>
