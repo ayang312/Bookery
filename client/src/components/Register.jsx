@@ -42,17 +42,15 @@ const Register = () => {
         role: "ASSISTANT",
       }).unwrap();
 
-      if (!response.ok) {
-        throw new Error(data.message || "Something went wrong fetching API");
-      }
-
       //   Handle successful Registration
-      console.log("Registration successful", data);
+      if (newUser.user) {
+        //   Redirect to confirmation page
+        navigate("/confirmation");
 
-      //   Redirect to confirmation page
-      navigate("/confirmation");
-      //   Success message
-      alert("Registration successful");
+        console.log("Registration successful", data);
+        //   Success message
+        alert("Registration successful");
+      }
     } catch (error) {
       setErrors(error.message);
     } finally {
