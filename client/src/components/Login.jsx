@@ -6,6 +6,7 @@ import {
   loginStart,
   loginSuccess,
 } from "../redux/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   // Tracks the form inputs
@@ -17,6 +18,8 @@ const Login = () => {
   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   // useDispatch to call apiSlice actions
   const dispatch = useDispatch();
+  // Navigate to other page
+  const navigate = useNavigate();
 
   // Handle input changes
   const handleChange = async (e) => {
