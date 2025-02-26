@@ -17,6 +17,15 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 
+// CORS middleware
+app.use(
+  cors({
+    origin: ["http://localhost:5173"], // Allow requests from this origin
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Specify allowed methods
+    credentials: true, // Allow credentials if needed
+  })
+);
+
 // Use the imported API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);

@@ -4,7 +4,7 @@ const Home = () => {
 
   return (
     <>
-      <h1>HomePage</h1>
+      <h1>Booking App that clients will see</h1>
     </>
   );
 };

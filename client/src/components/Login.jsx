@@ -38,7 +38,11 @@ const Login = () => {
 
     // API Call
     try {
-      const user = await loginUser(formData).unwrap();
+      const user = await loginUser({
+        ...formData,
+        baseUrl: "http://localhost:3000",
+      }).unwrap();
+      console.log(user);
 
       if (user.user) {
         //   Handle successful login
@@ -94,7 +98,9 @@ const Login = () => {
           </button>
           {isError && (
             <p>
-              {error?.data?.message || "Invalid credentials, please try again"}
+              {error?.data?.message ||
+                error?.message ||
+                "An error occurred. Please try again."}
             </p>
           )}
         </form>
