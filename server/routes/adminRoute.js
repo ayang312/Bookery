@@ -10,6 +10,9 @@ const {
 const { isLoggedIn } = require("../middlewares/authenticate");
 const { isAdmin } = require("../middlewares/authorize");
 
+// Admin Dashboard (needs to be a protected route)
+router.get("/", isLoggedIn, isAdmin)
+
 // Get all users
 router.get("/users", isLoggedIn, isAdmin, getAllUsers);
 
