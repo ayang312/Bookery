@@ -6,6 +6,7 @@ import {
   registerStart,
   registerSuccess,
 } from "../redux/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   // Handle form data to be sent to backend
@@ -20,6 +21,8 @@ const Register = () => {
   //   Integrate RTK Query to make call to api/auth/register
   const [registerUser, { isLoading, isError, error }] =
     useRegisterUserMutation();
+  // Dispatch actions from authSlice
+  const dispatch = useDispatch();
 
   // Form validations... username, email, password (later)
 
@@ -73,11 +76,11 @@ const Register = () => {
           <h2>Register</h2>
 
           {/* Error Handling */}
-          {errors && <p>{errors}</p>}
+          {error && <p>{error}</p>}
 
           {/* Username */}
           <div>
-            <label htmlFor="username"></label>
+            <label htmlFor="username">Username: </label>
             <input
               type="text"
               name="username"
@@ -85,13 +88,13 @@ const Register = () => {
               value={formData.username}
               onChange={handleChange}
               required
-              placeholder="Enter a new unique username"
+              placeholder="Enter a unique username"
             />
           </div>
 
           {/* Email */}
           <div>
-            <label htmlFor="email"></label>
+            <label htmlFor="email">Email: </label>
             <input
               type="email"
               name="email"
@@ -99,13 +102,13 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="Enter a new unique email"
+              placeholder="Enter a unique email"
             />
           </div>
 
           {/* Password */}
           <div>
-            <label htmlFor="password"></label>
+            <label htmlFor="password">Password: </label>
             <input
               type="password"
               name="password"
