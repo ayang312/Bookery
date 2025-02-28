@@ -20,7 +20,7 @@ const Assistant = () => {
   };
   return (
     <>
-      <h1>Here will be the Assistant Dashboard</h1>
+      <h1>Assistant Dashboard</h1>
       <button onClick={handleLogout}>Logout</button>
     </>
   );
