@@ -28,9 +28,17 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/assistant"
+            element={
+              <ProtectedRoute requiredRole="assistant">
+                {/* Assistant page is child of ProtectedRoute */}
+                <Assistant />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/assistant" element={<Assistant />} />
 
           {/* Unauthorized Page */}
           <Route path="/unauthorized" element={<Unauthorized />} />
