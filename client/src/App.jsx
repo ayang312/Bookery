@@ -22,15 +22,23 @@ function App() {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute requiredRole="admin">
+              <ProtectedRoute requiredRole="ADMIN">
                 {/* Admin page is a child of the ProtectedRoute component */}
                 <Admin />
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/assistant"
+            element={
+              <ProtectedRoute requiredRole="ASSISTANT">
+                {/* Assistant page is child of ProtectedRoute */}
+                <Assistant />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/assistant" element={<Assistant />} />
 
           {/* Unauthorized Page */}
           <Route path="/unauthorized" element={<Unauthorized />} />
