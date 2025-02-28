@@ -7,6 +7,7 @@ import Admin from "./Pages/Admin";
 import "./App.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Unauthorized from "./pages/Unauthorized";
+import Assistant from "./pages/Assistant";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/confirmation" element={<ConfirmationPage />} />
 
-          {/* Admin Routes */}
+          {/* Admin/Assistant Routes */}
           <Route
             path="/admin"
             element={
@@ -29,6 +30,7 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/assistant" element={<Assistant />} />
 
           {/* Unauthorized Page */}
           <Route path="/unauthorized" element={<Unauthorized />} />
