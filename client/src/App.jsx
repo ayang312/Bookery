@@ -11,11 +11,14 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* Client Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/confirmation" element={<ConfirmationPage />} />
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<Admin />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/confirmation" element={<ConfirmationPage />} />
-          <Route path="/admin" element={<Admin />} />
         </Routes>
       </BrowserRouter>
     </>
