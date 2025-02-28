@@ -50,13 +50,18 @@ const Login = () => {
     // API Call
     try {
       const user = await loginUser(formData).unwrap();
-      console.log(user);
+      // console.log(user);
 
       if (user.user) {
         //   Handle successful login
         dispatch(loginSuccess({ user: user.user }));
 
-        // Navigate to Admin Dashboard
+        // If assistant logs in, redirect to Assistant Dashboard
+        if (user?.user.role !== "admin") {
+          navigate("/assistant");
+        }
+
+        // If Admin logs in, navigate to Admin Dashboard
         navigate("/admin");
         console.log("Login successful", user);
         alert("Login successful");
