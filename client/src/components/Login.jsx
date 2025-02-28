@@ -59,12 +59,14 @@ const Login = () => {
         // If assistant logs in, redirect to Assistant Dashboard
         if (user?.user.role !== "admin") {
           navigate("/assistant");
+          console.log("Login successful", user);
+          alert("Login successful");
+        } else {
+          // If Admin logs in, navigate to Admin Dashboard
+          navigate("/admin");
+          console.log("Login successful", user);
+          alert("Login successful");
         }
-
-        // If Admin logs in, navigate to Admin Dashboard
-        navigate("/admin");
-        console.log("Login successful", user);
-        alert("Login successful");
       }
     } catch (error) {
       dispatch(loginFailure(error.message || "Failed to login"));
