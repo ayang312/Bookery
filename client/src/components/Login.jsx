@@ -57,7 +57,7 @@ const Login = () => {
         dispatch(loginSuccess({ user: user.user }));
 
         // If assistant logs in, redirect to Assistant Dashboard
-        if (user?.user.role !== "admin") {
+        if (user?.user.role !== "ADMIN") {
           navigate("/assistant");
           console.log("Login successful", user);
           alert("Welcome Assistant!");

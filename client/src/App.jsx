@@ -22,7 +22,7 @@ function App() {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute requiredRole="admin">
+              <ProtectedRoute requiredRole="ADMIN">
                 {/* Admin page is a child of the ProtectedRoute component */}
                 <Admin />
               </ProtectedRoute>
@@ -31,7 +31,7 @@ function App() {
           <Route
             path="/assistant"
             element={
-              <ProtectedRoute requiredRole="assistant">
+              <ProtectedRoute requiredRole="ASSISTANT">
                 {/* Assistant page is child of ProtectedRoute */}
                 <Assistant />
               </ProtectedRoute>
