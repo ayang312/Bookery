@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import ConfirmationPage from "./Pages/ConfirmationPage";
 import Admin from "./Pages/Admin";
 import "./App.css";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -16,7 +17,15 @@ function App() {
           <Route path="/confirmation" element={<ConfirmationPage />} />
 
           {/* Admin Routes */}
-          <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                {/* Admin page is a child of the ProtectedRoute component */}
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
