@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { logout } from "../redux/auth/authSlice";
 
 const Admin = () => {
 const dispatch = useDispatch();
@@ -6,6 +7,7 @@ const dispatch = useDispatch();
 const handleLogout = async () => {
   try {
     // Dispatch logout action from authSlice
+    dispatch(logout());
 
   } catch (error) {
     console.error("Failed to logout", error);
