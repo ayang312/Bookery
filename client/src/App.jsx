@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ConfirmationPage from "./components/ConfirmationPage";
-import Admin from "./components/Admin";
+import ConfirmationPage from "./Pages/ConfirmationPage";
+import Admin from "./Pages/Admin";
 import "./App.css";
 
 function App() {
