@@ -6,6 +6,7 @@ import {
   registerStart,
   registerSuccess,
 } from "../redux/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const Register = () => {
   // Handle form data to be sent to backend
@@ -20,6 +21,8 @@ const Register = () => {
   //   Integrate RTK Query to make call to api/auth/register
   const [registerUser, { isLoading, isError, error }] =
     useRegisterUserMutation();
+  // Dispatch actions from authSlice
+  const dispatch = useDispatch();
 
   // Form validations... username, email, password (later)
 
