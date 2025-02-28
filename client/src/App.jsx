@@ -6,6 +6,7 @@ import ConfirmationPage from "./Pages/ConfirmationPage";
 import Admin from "./Pages/Admin";
 import "./App.css";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Unauthorized from "./pages/Unauthorized";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+
+          {/* Unauthorized Page */}
+          <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </BrowserRouter>
     </>
