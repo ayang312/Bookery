@@ -2,20 +2,36 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ConfirmationPage from "./components/ConfirmationPage";
-import Admin from "./components/Admin";
+import ConfirmationPage from "./Pages/ConfirmationPage";
+import Admin from "./Pages/Admin";
 import "./App.css";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Unauthorized from "./pages/Unauthorized";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          {/* Client Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/confirmation" element={<ConfirmationPage />} />
+
+          {/* Admin Routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                {/* Admin page is a child of the ProtectedRoute component */}
+                <Admin />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/confirmation" element={<ConfirmationPage />} />
-          <Route path="/admin" element={<Admin />} />
+
+          {/* Unauthorized Page */}
+          <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </BrowserRouter>
     </>
