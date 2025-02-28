@@ -60,12 +60,12 @@ const Login = () => {
         if (user?.user.role !== "admin") {
           navigate("/assistant");
           console.log("Login successful", user);
-          alert("Login successful");
+          alert("Welcome Assistant!");
         } else {
           // If Admin logs in, navigate to Admin Dashboard
           navigate("/admin");
           console.log("Login successful", user);
-          alert("Login successful");
+          alert("Welcome Admin");
         }
       }
     } catch (error) {
