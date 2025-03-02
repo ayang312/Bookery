@@ -1,11 +1,27 @@
+import { useUpdateTimeSlotMutation } from "../redux/timeSlot/timeSlotApi";
 
 const Home = () => {
+  // import RTK Query mutations
+  const [updateTimeSlot] = useUpdateTimeSlotMutation();
 
+  const handleBook = async (id) => {
+    await updateTimeSlot({ id, isBooked: true });
+    alert("Time slot booked successfully!");
+  };
 
   return (
-    <>
-      <h1>Booking App that clients will see</h1>
-    </>
+    <div>
+      <h1>Book Your Time Slot</h1>
+      <ul>
+        "Map all Time Slots here"
+        <li>
+          Time Slot 1<button onClick={handleBook}>Book Now</button>
+        </li>
+        <li>
+          Time Slot 2<button onClick={handleBook}>Book Now</button>
+        </li>
+      </ul>
+    </div>
   );
 };
 
