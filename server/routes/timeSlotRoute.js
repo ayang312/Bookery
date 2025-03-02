@@ -1,3 +1,5 @@
+const { getAllTimeSlots } = require('../controllers/timeSlotsController');
+
 const router = require('express').Router();
 
 // Get all timeSlots
