@@ -24,6 +24,14 @@ export const timeSlotApi = rootApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    // Delete a time slot
+    deleteTimeSlot: builder.mutation({
+      query: (id) => ({
+        url: `/time-slots/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -31,4 +39,5 @@ export const {
   useGetAllTimeSlotsQuery,
   useCreateNewTimeSlotMutation,
   useUpdateTimeSlotMutation,
+  useDeleteTimeSlotMutation,
 } = timeSlotApi;
