@@ -43,10 +43,27 @@ const updateTimeSlot = async (req, res, next) => {
       data: { isBooked: req.body.isBooked },
     });
 
-    res.status(201).json(updatedTimeSlot);
+    res.status(200).json(updatedTimeSlot);
   } catch (error) {
     next({ message: "Failed to update time slot" });
   }
 };
 
-module.exports = { getAllTimeSlots, createNewTimeSlot, updateTimeSlot };
+// Delete a time slot
+const deleteTimeSlot = async (req, res, next) => {
+  try {
+    await prisma.timeSlot.delete({
+      where: { id: req.params.id },
+    });
+    res.status(200).json({ message: "Time Slot deleted successfully" });
+  } catch (error) {
+    next({ message: "Failed to delete time slot" });
+  }
+};
+
+module.exports = {
+  getAllTimeSlots,
+  createNewTimeSlot,
+  updateTimeSlot,
+  deleteTimeSlot,
+};
