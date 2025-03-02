@@ -14,10 +14,21 @@ export const timeSlotApi = rootApi.injectEndpoints({
         method: "POST",
         body: newTimeSlot,
       }),
-      
+    }),
+
+    // Update a time slot
+    updateTimeSlot: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/time-slots/${id}`,
+        method: "PUT",
+        body: data,
+      }),
     }),
   }),
 });
 
-export const { useGetAllTimeSlotsQuery, useCreateNewTimeSlotMutation } =
-  timeSlotApi;
+export const {
+  useGetAllTimeSlotsQuery,
+  useCreateNewTimeSlotMutation,
+  useUpdateTimeSlotMutation,
+} = timeSlotApi;
