@@ -13,10 +13,12 @@ const getAllTimeSlots = async (req, res, next) => {
 // Create a new time slot
 const createNewTimeSlot = async (req, res, next) => {
   try {
+    // destructured req.body
+    const { date, time } = req.body;
     const newTimeSlot = await prisma.timeSlot.create({
       data: {
-        date: new Date(req.body.date),
-        time: req.body.time,
+        date: new Date(date),
+        time: time,
       },
     });
     res.status(201).json(newTimeSlot);
@@ -28,9 +30,13 @@ const createNewTimeSlot = async (req, res, next) => {
 // Update a time slot
 const updateTimeSlot = async (req, res, next) => {
   try {
+    // req.params
+    const { id } = req.params;
+    // req.body
+    const { isBooked } = req.body;
     const existingTimeSlot = await prisma.timeSlot.findUnique({
       where: {
-        id: req.params.id,
+        id: parseInt(id),
       },
     });
 
@@ -39,8 +45,8 @@ const updateTimeSlot = async (req, res, next) => {
     }
 
     const updatedTimeSlot = await prisma.timeSlot.update({
-      where: { id: req.params.id },
-      data: { isBooked: req.body.isBooked },
+      where: { id: parseInt(id) },
+      data: { isBooked: isBooked },
     });
 
     res.status(200).json(updatedTimeSlot);
@@ -52,8 +58,11 @@ const updateTimeSlot = async (req, res, next) => {
 // Delete a time slot
 const deleteTimeSlot = async (req, res, next) => {
   try {
+    // req.params
+    const { id } = req.params;
+
     await prisma.timeSlot.delete({
-      where: { id: req.params.id },
+      where: { id: parseInt(id) },
     });
     res.status(200).json({ message: "Time Slot deleted successfully" });
   } catch (error) {
