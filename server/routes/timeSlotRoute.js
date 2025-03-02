@@ -1,4 +1,4 @@
-const { getAllTimeSlots } = require('../controllers/timeSlotsController');
+const { getAllTimeSlots, createNewTimeSlot } = require('../controllers/timeSlotsController');
 
 const router = require('express').Router();
 
@@ -6,6 +6,7 @@ const router = require('express').Router();
 router.get("/", getAllTimeSlots);
 
 // Create a new timeSlot
+router.post("/", createNewTimeSlot);
 
 // Update a timeSlot
 
