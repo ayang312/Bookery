@@ -2,6 +2,7 @@ const {
   getAllTimeSlots,
   createNewTimeSlot,
   updateTimeSlot,
+  deleteTimeSlot,
 } = require("../controllers/timeSlotsController");
 
 const router = require("express").Router();
@@ -16,5 +17,6 @@ router.post("/", createNewTimeSlot);
 router.put("/:id", updateTimeSlot);
 
 // Delete a timeSlot
+router.delete("/:id", deleteTimeSlot);
 
 module.exports = router;
