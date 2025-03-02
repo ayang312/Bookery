@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoute");
 const adminRoutes = require("./routes/adminRoute");
 const meRoutes = require("./routes/meRoute");
+const timeSlotRoutes = require("./routes/timeSlotRoute");
 const cookieParser = require("cookie-parser");
 
 // Load environment variables
@@ -36,5 +37,6 @@ app.use((req, res, next) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/me", meRoutes);
+app.use("/api/time-slots", timeSlotRoutes);
 
 module.exports = app;
