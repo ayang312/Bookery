@@ -41,23 +41,35 @@ const Home = () => {
       return;
     }
 
+    // Filter time slots from the database
+    const selectedSlot = timeSlots.find((slot) => {
+      const slotDate = new Date(slot.date).toLocaleDateString("en-US");
+      const slotTime = slot.time;
+
+      // Match the selected day and time
+      return (
+        slotDate === selectedDay &&
+        (selectedTime === "All Day" || slotTime === selectedTime)
+      );
+    });
+
+    if (!selectedSlot) {
+      alert("No available time slots match your selection");
+      return;
+    }
+
     // Update time slot booking status
-    await updateTimeSlot({ id, isBooked: true });
-    alert("Time slot booked successfully!");
+    try {
+      await updateTimeSlot({ id, isBooked: true });
+      alert("Time slot booked successfully!");
+    } catch (error) {
+      console.error("Failed to update time slot", error);
+    }
 
     // Reset selections
     setSelectedDay("");
     setSelectedTime("");
   };
-
-  // Find days from the time slots
-  const availableDays = [
-    ...new Set(
-      timeSlots.map((slot) => new Date(slot.date).toLocaleDateString())
-    ),
-  ];
-
-  // Filter the time slots for the selected day
 
   return (
     <div>
