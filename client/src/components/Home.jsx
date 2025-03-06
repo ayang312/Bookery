@@ -17,7 +17,21 @@ const Home = () => {
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
 
-  // Preset Time Options for Dropdown
+  // Preset the Next 10 Days for Day Selection Dropdown
+  const nextTenDays = [];
+  const today = new Date();
+
+  for (let i = 1; i <= 10; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+
+    const dayOfWeek = date.toLocaleDateString("en-US", { weekday: "long" });
+    const formattedDate = date.toLocaleDateString("en-US");
+
+    nextTenDays.push({ dayOfWeek, formattedDate });
+  }
+
+  // Preset Time Options for Time Selection Dropdown
   const timeOptions = ["All Day", "Morning", "Afternoon", "Evening"];
 
   // Handle Step One form completion
@@ -73,10 +87,10 @@ const Home = () => {
               onChange={(e) => setSelectedDay(e.target.value)}
             >
               <option value="">Select a day</option>
-              {availableDays.map((day) => {
+              {nextTenDays.map((day) => {
                 return (
-                  <option key={day} value={day}>
-                    {day}
+                  <option key={day.formattedDate} value={day.formattedDate}>
+                    {day.dayOfWeek}, {day.formattedDate}
                   </option>
                 );
               })}
