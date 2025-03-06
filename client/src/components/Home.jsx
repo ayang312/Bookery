@@ -1,9 +1,14 @@
 import { useState } from "react";
-import { useUpdateTimeSlotMutation } from "../redux/timeSlot/timeSlotApi";
+import {
+  useGetAllTimeSlotsQuery,
+  useUpdateTimeSlotMutation,
+} from "../redux/timeSlot/timeSlotApi";
 
 const Home = () => {
-  // import RTK Query mutations
+  // Fetch time slots from backend via RTK Query
+  const { data: timeSlots, isLoading, isError } = useGetAllTimeSlotsQuery();
   const [updateTimeSlot] = useUpdateTimeSlotMutation();
+
   // Initialize state for day and time
   const [day, setDay] = useState(false);
   const [time, setTime] = useState(false);
