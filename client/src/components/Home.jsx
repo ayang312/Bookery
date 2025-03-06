@@ -16,6 +16,24 @@ const Home = () => {
   // Initialize state for day and time
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [customError, setCustomError] = useState("");
+
+  // Preset the Next 10 Days for Day Selection Dropdown
+  const nextTenDays = [];
+  const today = new Date();
+
+  for (let i = 1; i <= 10; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+
+    const dayOfWeek = date.toLocaleDateString("en-US", { weekday: "long" });
+    const formattedDate = date.toLocaleDateString("en-US");
+
+    nextTenDays.push({ dayOfWeek, formattedDate });
+  }
+
+  // Preset Time Options for Time Selection Dropdown
+  const timeOptions = ["All Day", "Morning", "Afternoon", "Evening"];
 
   // Handle Step One form completion
   const handleStepOne = async (id) => {
@@ -24,21 +42,39 @@ const Home = () => {
       return;
     }
 
-    // Update time slot booking status
-    await updateTimeSlot({ id, isBooked: true });
-    alert("Time slot booked successfully!");
+    // Filter time slots from the database
+    const selectedSlot = timeSlots.find((slot) => {
+      const slotDate = new Date(slot.date).toLocaleDateString("en-US");
+      const slotTime = slot.time;
 
-    // Reset selections
-    setSelectedDay("");
-    setSelectedTime("");
+      // Match the selected day and time
+      return (
+        slotDate === selectedDay &&
+        (selectedTime === "All Day" || slotTime === selectedTime)
+      );
+    });
+
+    if (!selectedSlot) {
+      setCustomError(
+        "No Time Slots found, please choose a different date or time"
+      );
+      return;
+    }
+
+    try {
+      // Update time slot booking status
+      await updateTimeSlot({ id: selectedSlot.id, isBooked: true });
+      alert("Time slot booked successfully!");
+
+      // Reset selections
+      setSelectedDay("");
+      setSelectedTime("");
+      setCustomError("");
+    } catch (error) {
+      console.error("Failed to update time slot", error);
+      setCustomError("An error occurred while booking the time slot.");
+    }
   };
-
-  // Find days from the time slots
-  const availableDays = [
-    ...new Set(
-      timeSlots.map((slot) => new Date(slot.date).toLocaleDateString())
-    ),
-  ];
 
   return (
     <div>
@@ -68,26 +104,48 @@ const Home = () => {
               onChange={(e) => setSelectedDay(e.target.value)}
             >
               <option value="">Select a day</option>
-              {availableDays.map((day) => {
-                <option key={day} value={day}>
-                  {day}
-                </option>;
+              {nextTenDays.map((day) => {
+                return (
+                  <option key={day.formattedDate} value={day.formattedDate}>
+                    {day.dayOfWeek}, {day.formattedDate}
+                  </option>
+                );
               })}
             </select>
           </li>
           <li>
             {/* Time Selection */}
-            {/* <label htmlFor="time">What time works for you?</label>
-            <select name="time" id="time" value={selectedTime}>
-              <option onClick={handleTime}>All Day</option>
-              <option onClick={handleTime}>Morning</option>
-              <option onClick={handleTime}>Afternoon</option>
-              <option onClick={handleTime}>Evening</option>
-            </select> */}
+            <label htmlFor="time">What time works for you?</label>
+            <select
+              name="time"
+              id="time"
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+            >
+              <option value="">Select a time</option>
+              {timeOptions.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
           </li>
         </ul>
+
         {/* Submit Button */}
-        <button onClick={handleStepOne}>Continue to Step 2</button>
+        <button onClick={handleStepOne}>
+          {/* Loading */}
+          {isLoading ? "Loading available time slots" : "Continue to Step 2"}
+        </button>
+
+        {/* Display Error Message */}
+        {customError && <div>{customError}</div>}
+        {isError && (
+          <div>
+            {error?.data?.message ||
+              "An error occurred while fetching time slots"}
+          </div>
+        )}
       </div>
     </div>
   );
