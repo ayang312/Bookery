@@ -6,42 +6,39 @@ import {
 
 const Home = () => {
   // Fetch time slots from backend via RTK Query
-  const { data: timeSlots, isLoading, isError } = useGetAllTimeSlotsQuery();
+  const {
+    data: timeSlots = [],
+    isLoading,
+    isError,
+  } = useGetAllTimeSlotsQuery();
   const [updateTimeSlot] = useUpdateTimeSlotMutation();
 
   // Initialize state for day and time
-  const [selectedDay, setSelectedDay] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(false);
-
-  // Handle dropdown for day selection
-  const handleDay = () => {
-    setSelectedDay(true);
-  };
-
-  // Handle dropdown for time selection
-  const handleTime = () => {
-    setSelectedTime(true);
-  };
+  const [selectedDay, setSelectedDay] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
 
   // Handle Step One form completion
-
   const handleStepOne = async (id) => {
     if (!selectedDay || !selectedTime) {
       alert("Please select both a day and a time.");
       return;
     }
 
+    // Update time slot booking status
     await updateTimeSlot({ id, isBooked: true });
     alert("Time slot booked successfully!");
 
-    // Reset state
-    setSelectedDay(false);
-    setSelectedTime(false);
+    // Reset selections
+    setSelectedDay("");
+    setSelectedTime("");
   };
 
-  if (selectedDay && selectedTime) {
-    handleStepOne();
-  }
+  // Find days from the time slots
+  const availableDays = [
+    ...new Set(
+      timeSlots.map((slot) => new Date(slot.date).toLocaleDateString())
+    ),
+  ];
 
   return (
     <div>
@@ -62,30 +59,35 @@ const Home = () => {
         <ul>
           {/* Map all Time Slots here */}
           <li>
-            {/* What Day works for you? */}
+            {/* Day Selection */}
+            <label htmlFor="day">What day works for you?</label>
             <select
               name="day"
               id="day"
-              aria-placeholder="What day works for you?"
+              value={selectedDay}
+              onChange={(e) => setSelectedDay(e.target.value)}
             >
-              <option onClick={handleDay}>Day 1</option>
-              <option onClick={handleDay}>Day 2</option>
-              <option onClick={handleDay}>Day 3</option>
+              <option value="">Select a day</option>
+              {availableDays.map((day) => {
+                <option key={day} value={day}>
+                  {day}
+                </option>;
+              })}
             </select>
           </li>
           <li>
-            <select
-              name="time"
-              id="time"
-              aria-placeholder="What time works for you?"
-            >
+            {/* Time Selection */}
+            {/* <label htmlFor="time">What time works for you?</label>
+            <select name="time" id="time" value={selectedTime}>
               <option onClick={handleTime}>All Day</option>
               <option onClick={handleTime}>Morning</option>
               <option onClick={handleTime}>Afternoon</option>
               <option onClick={handleTime}>Evening</option>
-            </select>
+            </select> */}
           </li>
         </ul>
+        {/* Submit Button */}
+        <button onClick={handleStepOne}>Continue to Step 2</button>
       </div>
     </div>
   );
