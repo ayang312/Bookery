@@ -88,8 +88,19 @@ const Home = () => {
             </select> */}
           </li>
         </ul>
+
         {/* Submit Button */}
-        <button onClick={handleStepOne}>Continue to Step 2</button>
+        <button onClick={handleStepOne}>
+          {/* Loading */}
+          {isLoading ? "Loading available time slots" : "Continue to Step 2"}
+        </button>
+
+        {isError && (
+          <div>
+            {error?.data?.message ||
+              "No Time Slots found, please choose a different date or time"}
+          </div>
+        )}
       </div>
     </div>
   );
