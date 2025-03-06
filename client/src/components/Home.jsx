@@ -16,6 +16,7 @@ const Home = () => {
   // Initialize state for day and time
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [customError, setCustomError] = useState("");
 
   // Preset the Next 10 Days for Day Selection Dropdown
   const nextTenDays = [];
@@ -54,21 +55,25 @@ const Home = () => {
     });
 
     if (!selectedSlot) {
-      alert("No available time slots match your selection");
+      setCustomError(
+        "No Time Slots found, please choose a different date or time"
+      );
       return;
     }
 
-    // Update time slot booking status
     try {
-      await updateTimeSlot({ id, isBooked: true });
+      // Update time slot booking status
+      await updateTimeSlot({ id: selectedSlot.id, isBooked: true });
       alert("Time slot booked successfully!");
+
+      // Reset selections
+      setSelectedDay("");
+      setSelectedTime("");
+      setCustomError("");
     } catch (error) {
       console.error("Failed to update time slot", error);
+      setCustomError("An error occurred while booking the time slot.");
     }
-
-    // Reset selections
-    setSelectedDay("");
-    setSelectedTime("");
   };
 
   return (
@@ -133,10 +138,12 @@ const Home = () => {
           {isLoading ? "Loading available time slots" : "Continue to Step 2"}
         </button>
 
+        {/* Display Error Message */}
+        {customError && <div>{customError}</div>}
         {isError && (
           <div>
             {error?.data?.message ||
-              "No Time Slots found, please choose a different date or time"}
+              "An error occurred while fetching time slots"}
           </div>
         )}
       </div>
