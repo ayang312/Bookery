@@ -69,9 +69,11 @@ const Home = () => {
             >
               <option value="">Select a day</option>
               {availableDays.map((day) => {
-                <option key={day} value={day}>
-                  {day}
-                </option>;
+                return (
+                  <option key={day} value={day}>
+                    {day}
+                  </option>
+                );
               })}
             </select>
           </li>
