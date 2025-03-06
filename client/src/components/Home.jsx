@@ -17,6 +17,9 @@ const Home = () => {
   const [selectedDay, setSelectedDay] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
 
+  // Preset Time Options for Dropdown
+  const timeOptions = ["All Day", "Morning", "Afternoon", "Evening"];
+
   // Handle Step One form completion
   const handleStepOne = async (id) => {
     if (!selectedDay || !selectedTime) {
@@ -39,6 +42,8 @@ const Home = () => {
       timeSlots.map((slot) => new Date(slot.date).toLocaleDateString())
     ),
   ];
+
+  // Filter the time slots for the selected day
 
   return (
     <div>
@@ -79,13 +84,20 @@ const Home = () => {
           </li>
           <li>
             {/* Time Selection */}
-            {/* <label htmlFor="time">What time works for you?</label>
-            <select name="time" id="time" value={selectedTime}>
-              <option onClick={handleTime}>All Day</option>
-              <option onClick={handleTime}>Morning</option>
-              <option onClick={handleTime}>Afternoon</option>
-              <option onClick={handleTime}>Evening</option>
-            </select> */}
+            <label htmlFor="time">What time works for you?</label>
+            <select
+              name="time"
+              id="time"
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+            >
+              <option value="">Select a time</option>
+              {timeOptions.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
           </li>
         </ul>
 
