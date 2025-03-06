@@ -29,13 +29,13 @@ async function seed() {
   //   Seed TimeSlots
   const timeSlots = await prisma.timeSlot.createMany({
     data: [
-      { date: new Date("2025-02-20"), time: "10:00 AM", isBooked: false },
-      { date: new Date("2025-02-20"), time: "11:00 AM", isBooked: false },
-      { date: new Date("2025-02-20"), time: "12:00 PM", isBooked: true },
-      { date: new Date("2025-02-21"), time: "12:00 PM", isBooked: false },
-      { date: new Date("2025-02-21"), time: "1:00 PM", isBooked: false },
-      { date: new Date("2025-02-22"), time: "12:00 PM", isBooked: true },
-      { date: new Date("2025-02-22"), time: "1:00 PM", isBooked: false },
+      { date: new Date("2025-03-20"), time: "10:00 AM", isBooked: false },
+      { date: new Date("2025-03-20"), time: "11:00 AM", isBooked: false },
+      { date: new Date("2025-03-20"), time: "12:00 PM", isBooked: true },
+      { date: new Date("2025-03-21"), time: "12:00 PM", isBooked: false },
+      { date: new Date("2025-03-21"), time: "1:00 PM", isBooked: false },
+      { date: new Date("2025-03-22"), time: "12:00 PM", isBooked: true },
+      { date: new Date("2025-03-22"), time: "1:00 PM", isBooked: false },
     ],
   });
   console.log(`${timeSlots.count} time slots created`);
@@ -100,7 +100,9 @@ async function seed() {
       },
     ],
   });
-  console.log(`${additionalAppointments.count} additional appointments created.`);
+  console.log(
+    `${additionalAppointments.count} additional appointments created.`
+  );
 }
 
 seed()
