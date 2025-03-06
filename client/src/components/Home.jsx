@@ -10,17 +10,17 @@ const Home = () => {
   const [updateTimeSlot] = useUpdateTimeSlotMutation();
 
   // Initialize state for day and time
-  const [day, setDay] = useState(false);
-  const [time, setTime] = useState(false);
+  const [selectedDay, setSelectedDay] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(false);
 
   // Handle dropdown for day selection
   const handleDay = () => {
-    setDay(true);
+    setSelectedDay(true);
   };
 
   // Handle dropdown for time selection
   const handleTime = () => {
-    setTime(true);
+    setSelectedTime(true);
   };
 
   // Handle Step One form completion
@@ -30,11 +30,11 @@ const Home = () => {
     alert("Time slot booked successfully!");
 
     // Reset state
-    setDay(false);
-    setTime(false);
+    setSelectedDay(false);
+    setSelectedTime(false);
   };
 
-  if (day && time) {
+  if (selectedDay && selectedTime) {
     handleStepOne();
   }
 
