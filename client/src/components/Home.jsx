@@ -26,6 +26,11 @@ const Home = () => {
   // Handle Step One form completion
 
   const handleStepOne = async (id) => {
+    if (!selectedDay || !selectedTime) {
+      alert("Please select both a day and a time.");
+      return;
+    }
+
     await updateTimeSlot({ id, isBooked: true });
     alert("Time slot booked successfully!");
 
