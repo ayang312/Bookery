@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   useCreateUserMutation,
   useGetAllUsersQuery,
+  useUpdateUserMutation,
 } from "../redux/admin/userApi";
 
 const Admin = () => {
@@ -13,6 +14,7 @@ const Admin = () => {
   // User Management RTK
   const { data: users = [], refetch: refetchUsers } = useGetAllUsersQuery();
   const [createUser] = useCreateUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   // Initialize local state for the form
   const [newUser, setNewUser] = useState({
@@ -33,6 +35,18 @@ const Admin = () => {
       refetchUsers();
     } catch (error) {
       console.error("Failed to create new user", error);
+    }
+  };
+
+  // Handle Update User Button to promote/demote role
+  const handleUpdateUser = async (user) => {
+    try {
+      // API call to backend to update User
+      await updateUser(user).unwrap();
+      alert("User updated successfully!");
+      refetchUsers();
+    } catch (error) {
+      console.error("Failed to udpate user", error);
     }
   };
 
@@ -86,7 +100,24 @@ const Admin = () => {
         </div>
 
         <h3>All Users</h3>
-        <ul>{/* Map the Users here */}</ul>
+        <ul>
+          {/* Map the Users here */}
+          {users.map((user) => (
+            <li key={user.id}>
+              {user.username} ({user.role})
+              <button
+                onClick={() =>
+                  handleUpdateUser({
+                    ...user,
+                    role: user.role === "ADMIN" ? "ASSISTANT" : "ADMIN",
+                  })
+                }
+              >
+                {user.role === "ADMIN" ? "Demote" : "Promote"}
+              </button>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Time Slot Management */}
