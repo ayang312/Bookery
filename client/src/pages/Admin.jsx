@@ -34,7 +34,7 @@ const Admin = () => {
         <h2>User Management</h2>
         <div>
           <h3>Create New User</h3>
-          {/* Username Form */}
+          {/* Username Form Input */}
           <input
             type="text"
             placeholder="Username"
@@ -42,6 +42,13 @@ const Admin = () => {
             onChange={(e) =>
               setNewUser({ ...newUser, username: e.target.value })
             }
+          />
+          {/* Email Form input */}
+          <input
+            type="email"
+            placeholder="Email"
+            value={newUser.email}
+            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
           />
         </div>
 
