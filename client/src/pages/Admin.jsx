@@ -50,6 +50,15 @@ const Admin = () => {
             value={newUser.email}
             onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
           />
+
+          <select
+            value={newUser.role}
+            onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+          >
+            <option value="ASSISTANT">Assistant</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+          <button onClick={handleCreateUser}>Create User</button>
         </div>
 
         <h3>All Users</h3>
