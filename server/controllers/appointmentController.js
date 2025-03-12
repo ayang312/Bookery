@@ -51,4 +51,16 @@ const createAppointment = async (req, res, next) => {
   }
 };
 
-module.exports = { createAppointment };
+// Get All Appointments
+const getAllAppointments = async (req, res, next) => {
+  try {
+    const appointments = await prisma.appointment.findMany({
+      include: { timeSlot: true }, // Include related time slot details
+    });
+    res.status(200).json(appointments);
+  } catch (error) {
+    next({ message: "Failed to fetch all appointments" });
+  }
+};
+
+module.exports = { createAppointment, getAllAppointments };
