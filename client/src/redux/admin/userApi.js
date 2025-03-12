@@ -6,7 +6,16 @@ export const userApi = rootApi.injectEndpoints({
     getAllUsers: builder.query({
       query: () => "/users",
     }),
+
+    // Create a new user
+    createUser: builder.mutation({
+      query: (newUser) => ({
+        url: "/users",
+        method: "POST",
+        body: newUser,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllUsersQuery } = userApi;
+export const { useGetAllUsersQuery, useCreateUserMutation } = userApi;
