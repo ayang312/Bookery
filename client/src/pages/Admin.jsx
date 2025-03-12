@@ -3,6 +3,7 @@ import { logout } from "../redux/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import {
   useCreateUserMutation,
+  useDeleteUserMutation,
   useGetAllUsersQuery,
   useUpdateUserMutation,
 } from "../redux/admin/userApi";
@@ -15,6 +16,7 @@ const Admin = () => {
   const { data: users = [], refetch: refetchUsers } = useGetAllUsersQuery();
   const [createUser] = useCreateUserMutation();
   const [updateUser] = useUpdateUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
 
   // Initialize local state for the form
   const [newUser, setNewUser] = useState({
@@ -47,6 +49,18 @@ const Admin = () => {
       refetchUsers();
     } catch (error) {
       console.error("Failed to udpate user", error);
+    }
+  };
+
+  // Handle Delete User button
+  const handleDeleteUser = async (id) => {
+    try {
+      // API Call to backend to delete user
+      await deleteUser(id).unwrap();
+      alert("User deleted successfully!");
+      refetchUsers();
+    } catch (error) {
+      console.error("Failed to delete user", error);
     }
   };
 
@@ -114,6 +128,9 @@ const Admin = () => {
                 }
               >
                 {user.role === "ADMIN" ? "Demote" : "Promote"}
+              </button>
+              <button onClick={() => handleDeleteUser(user.id)}>
+                Delete User
               </button>
             </li>
           ))}
