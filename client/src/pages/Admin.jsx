@@ -3,26 +3,54 @@ import { logout } from "../redux/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const handleLogout = async () => {
-  try {
-    // Dispatch logout action from authSlice
-    dispatch(logout());
-    // Redirect back to homepage
-    navigate("/");
-    // Show alert message
-    alert("Successfully logged out!");
-  } catch (error) {
-    console.error("Failed to logout", error);
-    
-  }
-}
+  // Initialize local state for the form
+  const [newUser, setNewUser] = useState({
+    username: "",
+    email: "",
+    role: "ASSISTANT",
+  });
+
+  const handleLogout = async () => {
+    try {
+      // Dispatch logout action from authSlice
+      dispatch(logout());
+      // Redirect back to homepage
+      navigate("/");
+      // Show alert message
+      alert("Successfully logged out!");
+    } catch (error) {
+      console.error("Failed to logout", error);
+    }
+  };
 
   return (
     <>
       <h1>Admin Dashboard</h1>
+      {/* User Management */}
+      <section>
+        <h2>User Management</h2>
+        {/* Create New User */}
+
+        <h3>All Users</h3>
+        <ul>{/* Map the Users here */}</ul>
+      </section>
+
+      {/* Time Slot Management */}
+      <section>
+        <h2>Time Slot Management</h2>
+        <div>
+          <h3>Create New Time Slot</h3>
+          {/* Inputs to create time slots */}
+        </div>
+
+        <h3>All Time Slots</h3>
+        <ul>{/* Map all the time slots here */}</ul>
+      </section>
+
+      {/* Button to Logout */}
       <div>
         <button onClick={handleLogout}>Logout</button>
       </div>
