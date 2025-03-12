@@ -15,7 +15,19 @@ export const userApi = rootApi.injectEndpoints({
         body: newUser,
       }),
     }),
+    // Update a user
+    updateUser: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/users/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllUsersQuery, useCreateUserMutation } = userApi;
+export const {
+  useGetAllUsersQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} = userApi;
