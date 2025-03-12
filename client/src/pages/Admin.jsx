@@ -32,7 +32,18 @@ const Admin = () => {
       {/* User Management */}
       <section>
         <h2>User Management</h2>
-        {/* Create New User */}
+        <div>
+          <h3>Create New User</h3>
+          {/* Username Form */}
+          <input
+            type="text"
+            placeholder="Username"
+            value={newUser.username}
+            onChange={(e) =>
+              setNewUser({ ...newUser, username: e.target.value })
+            }
+          />
+        </div>
 
         <h3>All Users</h3>
         <ul>{/* Map the Users here */}</ul>
