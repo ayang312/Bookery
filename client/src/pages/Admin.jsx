@@ -1,10 +1,18 @@
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import {
+  useCreateUserMutation,
+  useGetAllUsersQuery,
+} from "../redux/admin/userApi";
 
 const Admin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // User Management RTK
+  const { data: users = [], refetch: refetchUsers } = useGetAllUsersQuery();
+  const [createUser] = useCreateUserMutation();
 
   // Initialize local state for the form
   const [newUser, setNewUser] = useState({
@@ -13,6 +21,22 @@ const Admin = () => {
     role: "ASSISTANT",
   });
 
+  // Handle Create User button
+  const handleCreateUser = async () => {
+    try {
+      // API call to backend to create user
+      await createUser(newUser).unwrap();
+      alert("User created successfully!");
+      // reset state
+      setNewUser({ username: "", email: "", role: "ASSISTANT" });
+      // refetch the data after mutation
+      refetchUsers();
+    } catch (error) {
+      console.error("Failed to create new user", error);
+    }
+  };
+
+  // Handle Logout button
   const handleLogout = async () => {
     try {
       // Dispatch logout action from authSlice
