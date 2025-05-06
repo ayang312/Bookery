@@ -1,4 +1,19 @@
+import {
+  useCreateNewTimeSlotMutation,
+  useDeleteTimeSlotMutation,
+  useGetAllTimeSlotsQuery,
+  useUpdateTimeSlotMutation,
+} from "../redux/timeSlot/timeSlotApi";
+
 const TimeSlotManagement = () => {
+  const { data: timeSlots = [] } = useGetAllTimeSlotsQuery();
+
+  // Handle Create Time Slot
+
+  // Handle Update Time Slot
+
+  // Handle Delete Time Slot
+
   return (
     <>
       {/* Time Slot Management */}
@@ -9,8 +24,17 @@ const TimeSlotManagement = () => {
           {/* Inputs to create time slots */}
         </div>
 
+        {/* Map all the time slots here */}
         <h3>All Time Slots</h3>
-        <ul>{/* Map all the time slots here */}</ul>
+        <ul>
+          {timeSlots.map((slot) => (
+            <li key={slot.id}>
+              {slot.date} - {slot.time} (
+              {slot.isBooked ? "Booked" : "Available"})<button>Edit</button>
+              <button>Delete</button>
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   );
