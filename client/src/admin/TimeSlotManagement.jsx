@@ -67,6 +67,21 @@ const TimeSlotManagement = () => {
         <div>
           <h3>Create New Time Slot</h3>
           {/* Inputs to create time slots */}
+          <input
+            type="date"
+            value={newTimeSlot.date}
+            onChange={(e) =>
+              setNewTimeSlot({ ...newTimeSlot, date: e.target.value })
+            }
+          />
+          <input
+            type="time"
+            value={newTimeSlot.time}
+            onChange={(e) =>
+              setNewTimeSlot({ ...newTimeSlot, time: e.target.value })
+            }
+          />
+          <button onClick={handleCreateTimeSlot}>Create Time Slot</button>
         </div>
 
         {/* Map all the time slots here */}
