@@ -7,7 +7,8 @@ import {
 } from "../redux/timeSlot/timeSlotApi";
 
 const TimeSlotManagement = () => {
-  const { data: timeSlots = [] } = useGetAllTimeSlotsQuery();
+  // RTK query calls
+  const { data: timeSlots = [], refetch } = useGetAllTimeSlotsQuery();
   const [createTimeSlot] = useCreateNewTimeSlotMutation();
 
   // Local state
@@ -19,6 +20,8 @@ const TimeSlotManagement = () => {
       await createTimeSlot(newTimeSlot).unwrap();
       alert("Time slot created successfully");
       setNewTimeSlot({ date: "", time: "" });
+      //   Fxn to manually refresh the list of time slots after a mutation
+      refetch();
     } catch (error) {
       console.error("Failed to create new time slot", error);
     }
