@@ -11,6 +11,7 @@ const TimeSlotManagement = () => {
   const { data: timeSlots = [], refetch } = useGetAllTimeSlotsQuery();
   const [createTimeSlot] = useCreateNewTimeSlotMutation();
   const [updateTimeSlot] = useUpdateTimeSlotMutation();
+  const [deleteTimeSlot] = useDeleteTimeSlotMutation();
 
   // Local state
   const [newTimeSlot, setNewTimeSlot] = useState({ date: "", time: "" });
@@ -46,6 +47,17 @@ const TimeSlotManagement = () => {
   };
 
   // Handle Delete Time Slot
+  const handleDeleteTimeSlot = async (id) => {
+    try {
+      // Send the id of the time slot to backend to delete it
+      await deleteTimeSlot(id).unwrap();
+      alert("Time slot deleted successfully");
+      //   Refresh list after mutation
+      refetch();
+    } catch (error) {
+      console.error("Failed to delete time slot", error);
+    }
+  };
 
   return (
     <>
