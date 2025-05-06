@@ -10,13 +10,16 @@ const TimeSlotManagement = () => {
   // RTK query calls
   const { data: timeSlots = [], refetch } = useGetAllTimeSlotsQuery();
   const [createTimeSlot] = useCreateNewTimeSlotMutation();
+  const [updateTimeSlot] = useUpdateTimeSlotMutation();
 
   // Local state
   const [newTimeSlot, setNewTimeSlot] = useState({ date: "", time: "" });
+  const [editingSlot, setEditingSlot] = useState(null);
 
   // Handle Create Time Slot
   const handleCreateTimeSlot = async () => {
     try {
+      // Send the newTimeSlot object date and time to the backend and extract the result of the mutation or else throw an error if it fails
       await createTimeSlot(newTimeSlot).unwrap();
       alert("Time slot created successfully");
       setNewTimeSlot({ date: "", time: "" });
@@ -26,7 +29,21 @@ const TimeSlotManagement = () => {
       console.error("Failed to create new time slot", error);
     }
   };
+
   // Handle Update Time Slot
+  const handleUpdateTimeSlot = async () => {
+    try {
+      // send the object id and whatever else to the backend and update the data.
+      await updateTimeSlot({ id: editingSlot.id, ...editingSlot }).unwrap();
+      alert("Time slot updated successfully");
+      //   Exit the edit mode
+      setEditingSlot(null);
+      //   Refresh the list after the mutation
+      refetch();
+    } catch (error) {
+      console.error("Failed to update the time slot", error);
+    }
+  };
 
   // Handle Delete Time Slot
 
