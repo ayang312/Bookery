@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   useCreateNewTimeSlotMutation,
   useDeleteTimeSlotMutation,
@@ -7,9 +8,21 @@ import {
 
 const TimeSlotManagement = () => {
   const { data: timeSlots = [] } = useGetAllTimeSlotsQuery();
+  const [createTimeSlot] = useCreateNewTimeSlotMutation();
+
+  // Local state
+  const [newTimeSlot, setNewTimeSlot] = useState({ date: "", time: "" });
 
   // Handle Create Time Slot
-
+  const handleCreateTimeSlot = async () => {
+    try {
+      await createTimeSlot(newTimeSlot).unwrap();
+      alert("Time slot created successfully");
+      setNewTimeSlot({ date: "", time: "" });
+    } catch (error) {
+      console.error("Failed to create new time slot", error);
+    }
+  };
   // Handle Update Time Slot
 
   // Handle Delete Time Slot
