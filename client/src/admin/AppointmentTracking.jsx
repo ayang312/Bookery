@@ -16,8 +16,15 @@ const AppointmentTracking = () => {
         <ul>
           {appointments.map((appointment) => (
             <li key={appointment.id}>
-              {appointment.firstName} {appointment.lastName} -{" "}
-              {appointment.eventDate} at {appointment.venue}
+              <strong>
+                {appointment.firstName} {appointment.lastName}
+              </strong>{" "}
+              - {appointment.eventDate} at {appointment.primaryVenue}
+              <br />
+              Email: {appointment.email}, Phone: {appointment.phoneNumber}
+              <br />
+              Time Slot: {appointment.timeSlot?.date} -{" "}
+              {appointment.timeSlot?.time}
               <button>Delete</button>
             </li>
           ))}
