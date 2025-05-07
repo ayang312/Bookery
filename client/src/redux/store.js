@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./auth/authApi";
 import authReducer from "./auth/authSlice";
-import { timeSlotApi } from "./timeSlot/timeSlotApi";
+import { timeSlotApi } from "./admin/timeSlotApi";
 import { userApi } from "./admin/userApi";
 
 const store = configureStore({
