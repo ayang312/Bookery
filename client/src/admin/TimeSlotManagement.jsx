@@ -84,6 +84,29 @@ const TimeSlotManagement = () => {
           <button onClick={handleCreateTimeSlot}>Create Time Slot</button>
         </div>
 
+        {/* Edit Time Slot */}
+        {editingSlot && (
+          <div>
+            <h3>Edit Time Slot</h3>
+            <input
+              type="date"
+              value={editingSlot.date}
+              onChange={(e) =>
+                setEditingSlot({ ...editingSlot, date: e.target.value })
+              }
+            />
+            <input
+              type="time"
+              value={editingSlot.time}
+              onChange={(e) =>
+                setEditingSlot({ ...editingSlot, time: e.target.value })
+              }
+            />
+            <button onClick={handleUpdateTimeSlot}>Update TIme Slot</button>
+            <button onClick={() => setEditingSlot(null)}>Cancel</button>
+          </div>
+        )}
+
         {/* Map all the time slots here */}
         <h3>All Time Slots</h3>
         <ul>
