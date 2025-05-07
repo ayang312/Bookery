@@ -1,5 +1,8 @@
-const AppointmentTracking = () => {
+import { useGetAllAppointmentsQuery } from "../redux/admin/appointmentApi";
 
+const AppointmentTracking = () => {
+  // RTK Query calls
+  const { data: appointments = [] } = useGetAllAppointmentsQuery();
 
   return (
     <>
@@ -9,7 +12,16 @@ const AppointmentTracking = () => {
         {/* Create New Appointment */}
 
         {/* List All Appointments */}
-        
+        <h3>All Appointments</h3>
+        <ul>
+          {appointments.map((appointment) => (
+            <li key={appointment.id}>
+              {appointment.firstName} {appointment.lastName} -{" "}
+              {appointment.eventDate} at {appointment.venue}
+              <button>Delete</button>
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   );
