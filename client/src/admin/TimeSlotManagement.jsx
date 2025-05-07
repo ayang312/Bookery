@@ -113,8 +113,11 @@ const TimeSlotManagement = () => {
           {timeSlots.map((slot) => (
             <li key={slot.id}>
               {slot.date} - {slot.time} (
-              {slot.isBooked ? "Booked" : "Available"})<button>Edit</button>
-              <button>Delete</button>
+              {slot.isBooked ? "Booked" : "Available"})
+              <button onClick={() => setEditingSlot(slot)}>Edit</button>
+              <button onClick={() => handleDeleteTimeSlot(slot.id)}>
+                Delete
+              </button>
             </li>
           ))}
         </ul>
