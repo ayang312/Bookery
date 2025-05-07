@@ -4,7 +4,7 @@ import {
   useDeleteTimeSlotMutation,
   useGetAllTimeSlotsQuery,
   useUpdateTimeSlotMutation,
-} from "../redux/timeSlot/timeSlotApi";
+} from "../redux/admin/timeSlotApi";
 
 const TimeSlotManagement = () => {
   // RTK query calls
