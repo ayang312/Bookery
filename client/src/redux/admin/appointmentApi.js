@@ -6,7 +6,17 @@ export const appointmentApi = rootApi.injectEndpoints({
     getAllAppointments: builder.query({
       query: () => "/appointments",
     }),
+
+    // Create a new appointment
+    createNewAppointment: builder.mutation({
+      query: (newAppointment) => ({
+        url: "/appointments",
+        method: "POST",
+        body: newAppointment,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllAppointmentsQuery } = appointmentApi;
+export const { useGetAllAppointmentsQuery, useCreateNewAppointmentMutation } =
+  appointmentApi;
