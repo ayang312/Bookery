@@ -4,6 +4,7 @@ import { logout } from "../redux/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import UserManagement from "../admin/UserManagement";
 import TimeSlotManagement from "../admin/TimeSlotManagement";
+import AppointmentTracking from "../admin/AppointmentTracking";
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Admin = () => {
       <TimeSlotManagement />
 
       {/* Appointment Tracking/Management */}
+      <AppointmentTracking />
 
       {/* Analytics Dashboard */}
 
