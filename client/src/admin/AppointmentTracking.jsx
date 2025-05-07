@@ -1,4 +1,6 @@
 const AppointmentTracking = () => {
+
+
   return (
     <>
       <section>
@@ -7,6 +9,7 @@ const AppointmentTracking = () => {
         {/* Create New Appointment */}
 
         {/* List All Appointments */}
+        
       </section>
     </>
   );
