@@ -17,6 +17,12 @@ const TimeSlotManagement = () => {
   const [newTimeSlot, setNewTimeSlot] = useState({ date: "", time: "" });
   const [editingSlot, setEditingSlot] = useState(null);
 
+  // Helper function to format the ISO date to yyyy-mm-dd
+  const formatDate = (isoDate) => {
+    // convert ISO 8601 string to JS Date object, convert it back to ISO 8601 string, extract only the date part from the ISO string
+    return new Date(isoDate).toISOString().split("T")[0];
+  };
+
   // Handle Create Time Slot
   const handleCreateTimeSlot = async () => {
     try {
@@ -69,7 +75,7 @@ const TimeSlotManagement = () => {
           {/* Inputs to create time slots */}
           <input
             type="date"
-            value={newTimeSlot.date}
+            value={newTimeSlot.date ? formatDate(newTimeSlot.date) : ""}
             onChange={(e) =>
               setNewTimeSlot({ ...newTimeSlot, date: e.target.value })
             }
@@ -90,7 +96,7 @@ const TimeSlotManagement = () => {
             <h3>Edit Time Slot</h3>
             <input
               type="date"
-              value={editingSlot.date}
+              value={editingSlot.date ? formatDate(editingSlot.date) : ""}
               onChange={(e) =>
                 setEditingSlot({ ...editingSlot, date: e.target.value })
               }
@@ -102,7 +108,7 @@ const TimeSlotManagement = () => {
                 setEditingSlot({ ...editingSlot, time: e.target.value })
               }
             />
-            <button onClick={handleUpdateTimeSlot}>Update TIme Slot</button>
+            <button onClick={handleUpdateTimeSlot}>Update Time Slot</button>
             <button onClick={() => setEditingSlot(null)}>Cancel</button>
           </div>
         )}

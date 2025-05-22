@@ -1,5 +1,7 @@
+import { useState } from "react";
 import {
   useCreateNewAppointmentMutation,
+  useDeleteAppointmentMutation,
   useGetAllAppointmentsQuery,
 } from "../redux/admin/appointmentApi";
 import { useGetAllTimeSlotsQuery } from "../redux/admin/timeSlotApi";
@@ -12,6 +14,7 @@ const AppointmentTracking = () => {
 
   //   Mutation calls for creating and deleting appointments
   const [createNewAppointment] = useCreateNewAppointmentMutation();
+  const [deleteAppointment] = useDeleteAppointmentMutation();
 
   // Local state for new appointment form
   const [newAppointment, setNewAppointment] = useState({
@@ -56,6 +59,16 @@ const AppointmentTracking = () => {
   };
 
   // Handle deleting appointments
+  const handleDeleteAppointment = async (id) => {
+    try {
+      await deleteAppointment(id).unwrap();
+      alert("Appointment deleted successfully");
+      // Refresh list of appointments after mutation call
+      refetchAppointments();
+    } catch (error) {
+      console.error("Failed to delete appointment", error);
+    }
+  };
 
   return (
     <>
@@ -178,7 +191,9 @@ const AppointmentTracking = () => {
               <br />
               Time Slot: {appointment.timeSlot?.date} -{" "}
               {appointment.timeSlot?.time}
-              <button>Delete</button>
+              <button onClick={() => handleDeleteAppointment(appointment.id)}>
+                Delete
+              </button>
             </li>
           ))}
         </ul>

@@ -15,8 +15,19 @@ export const appointmentApi = rootApi.injectEndpoints({
         body: newAppointment,
       }),
     }),
+
+    // Delete an appointment
+    deleteAppointment: builder.mutation({
+      query: (id) => ({
+        url: `/appointments/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useGetAllAppointmentsQuery, useCreateNewAppointmentMutation } =
-  appointmentApi;
+export const {
+  useGetAllAppointmentsQuery,
+  useCreateNewAppointmentMutation,
+  useDeleteAppointmentMutation,
+} = appointmentApi;
