@@ -190,7 +190,9 @@ const AppointmentTracking = () => {
               <br />
               Time Slot: {appointment.timeSlot?.date} -{" "}
               {appointment.timeSlot?.time}
-              <button>Delete</button>
+              <button onClick={() => handleDeleteAppointment(appointment.id)}>
+                Delete
+              </button>
             </li>
           ))}
         </ul>
