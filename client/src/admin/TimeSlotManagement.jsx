@@ -75,7 +75,7 @@ const TimeSlotManagement = () => {
           {/* Inputs to create time slots */}
           <input
             type="date"
-            value={newTimeSlot.date}
+            value={newTimeSlot.date ? formatDate(newTimeSlot.date) : ""}
             onChange={(e) =>
               setNewTimeSlot({ ...newTimeSlot, date: e.target.value })
             }
@@ -96,7 +96,7 @@ const TimeSlotManagement = () => {
             <h3>Edit Time Slot</h3>
             <input
               type="date"
-              value={editingSlot.date}
+              value={editingSlot.date ? formatDate(editingSlot.date) : ""}
               onChange={(e) =>
                 setEditingSlot({ ...editingSlot, date: e.target.value })
               }
