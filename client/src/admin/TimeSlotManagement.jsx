@@ -108,7 +108,7 @@ const TimeSlotManagement = () => {
                 setEditingSlot({ ...editingSlot, time: e.target.value })
               }
             />
-            <button onClick={handleUpdateTimeSlot}>Update TIme Slot</button>
+            <button onClick={handleUpdateTimeSlot}>Update Time Slot</button>
             <button onClick={() => setEditingSlot(null)}>Cancel</button>
           </div>
         )}
