@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   useGetAllTimeSlotsQuery,
   useUpdateTimeSlotMutation,
-} from "../redux/timeSlot/timeSlotApi";
+} from "../redux/admin/timeSlotApi";
 
 const Home = () => {
   // Fetch time slots from backend via RTK Query
