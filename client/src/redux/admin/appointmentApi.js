@@ -26,5 +26,8 @@ export const appointmentApi = rootApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllAppointmentsQuery, useCreateNewAppointmentMutation } =
-  appointmentApi;
+export const {
+  useGetAllAppointmentsQuery,
+  useCreateNewAppointmentMutation,
+  useDeleteAppointmentMutation,
+} = appointmentApi;
