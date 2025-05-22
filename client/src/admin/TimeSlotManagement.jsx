@@ -17,6 +17,12 @@ const TimeSlotManagement = () => {
   const [newTimeSlot, setNewTimeSlot] = useState({ date: "", time: "" });
   const [editingSlot, setEditingSlot] = useState(null);
 
+  // Helper function to format the ISO date to yyyy-mm-dd
+  const formatDate = (isoDate) => {
+    // convert ISO 8601 string to JS Date object, convert it back to ISO 8601 string, extract only the date part from the ISO string
+    return new Date(isoDate).toISOString().split("T")[0];
+  };
+
   // Handle Create Time Slot
   const handleCreateTimeSlot = async () => {
     try {
