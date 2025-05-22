@@ -3,7 +3,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ConfirmationPage from "./Pages/ConfirmationPage";
-import Admin from "./Pages/Admin";
+import Admin from "./pages/AdminDashboard";
 import "./App.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Unauthorized from "./pages/Unauthorized";
